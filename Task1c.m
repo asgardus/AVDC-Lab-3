@@ -1,20 +1,29 @@
 clc
+
+%% Initialization
+
 s = tf('s');
-cp = 0.4; 
-kp = 6.32;
-mp = 0.16;
-cc = 2*sqrt(mp*kp);
-zeta = cp/cc;
-omega = sqrt(kp/mp);
+cp = 0.4;                   %damping coefficient
+kp = 6.32;                  %spring constant
+mp = 0.16;                  %mass
+cc = 2*sqrt(mp*kp);         %critical damping coefficient
+zeta = cp/cc;               %damping ratio
+omega = sqrt(kp/mp);        %natural frequency
+omega_d = (1-zeta^2)*omega; %damped natural frequency
+
+% Transfer function
 T = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
-omega_d = (1-zeta^2)*omega;
-[mag,phase,wout]=bode(T,fr);
-omega_max=wout(find(mag==max(mag)));
+
+omega_max=wout(find(mag==max(mag))); %find resonant frequency
+
+%% Plots
+
 figure(1);
-fr=0:0.001:10e4;
-bode(T,fr);
+fr=0:0.001:10e2;
+[mag,phase,wout]=bode(T,fr);
+bode(T,fr)
 hold on
 figure(2);
-step(T);
+step(T)
 xlim([0 5])
 hold on
