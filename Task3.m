@@ -1,7 +1,8 @@
 clc
-
+close all
+clear all
 %% Initialization and Model
-
+src=1;
 s = tf('s');
 cp = 0.4;                   %damping coefficient
 kp = 6.32;                  %spring constant

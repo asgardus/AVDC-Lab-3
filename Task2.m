@@ -1,11 +1,13 @@
 clc
-
-%% Initialization
-
+close all
+clear all
+%% Initialization (PD)
+src=2;                      %define source (1=Sine,2=Impulse, 3=PSD)
 s = tf('s');
 cp = 0.4;                   %damping coefficient
-dd_mat = 0.4:0.1:0.6;       %derivative gain
-dp_mat = 0;                 %proportional gain
+hd_mat = 1.2;       %derivative gain
+hp_mat = 0;                 %proportional gain
+hi_mat= 0;                  %integral gain
 kp = 6.32;                  %spring constant
 mp = 0.16;                  %mass
 cc = 2*sqrt(mp*kp);         %critical damping coefficient
@@ -15,14 +17,14 @@ omega_d = (1-zeta^2)*omega; %damped natural frequency
 
 % Transfer function
 T1 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
-
-for i=1:length(dd_mat)
-    dd = dd_mat(i);
-    for j=1:length(dp_mat)
-            dp = dp_mat(j);
+hi=hi_mat;
+for i=1:length(hd_mat)
+    hd = hd_mat(i);
+    for j=1:length(hp_mat)
+            hp = hp_mat(j);
 
             % Transfer function
-            T2 = kp/(mp*s^2+dd*s+kp+dp); 
+            T2 = kp/(mp*s^2+hd*s+kp+hp); 
 
             fr=0:0.001:10e2;
             [mag,phase,wout]=bode(T1,fr);
@@ -37,13 +39,14 @@ for i=1:length(dd_mat)
         figure(2);
         step(T2)        
         hold on
+        sim('Main')
     end
 end
 
-figure(1);
-bode(T1,fr)
-legend('show')
-figure(2);
-step(T1)
-xlim([0 5])
-legend('show')
+% figure(1);
+% bode(T1,fr)
+% legend('show')
+% figure(2);
+% step(T1)
+% xlim([0 5])
+% legend('show')
