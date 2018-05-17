@@ -1,4 +1,6 @@
 clc
+close all
+clear all
 
 %% Initialization
 
@@ -13,7 +15,7 @@ zeta = cp/cc;               %damping ratio
 omega = sqrt(kp/mp);        %natural frequency
 omega_d = (1-zeta^2)*omega; %damped natural frequency
 
-% Transfer function
+% Transfer function(damped passive)
 T1 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
 
 for i=1:length(dd_mat)
