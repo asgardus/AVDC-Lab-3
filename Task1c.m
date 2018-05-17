@@ -23,7 +23,7 @@ omega = sqrt(kp/mp);        %natural frequency
 omega_d = (1-zeta^2)*omega; %damped natural frequency
 % Transfer function
 G1 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
-G2 = tf([cp kp],[mp cp kp])
+% G2 = tf([cp kp],[mp cp kp])
 
 fr=0:0.001:10e2;
 [mag,phase,wout]=bode(G1,fr);
@@ -31,17 +31,24 @@ omega_max=wout(find(mag==max(mag))); %find resonant frequency
 
 
 %% Task 1d
-f=0.5;
-dt=0.1;
-Tfinal=10;
-t = 0:dt:Tfinal
-u=0.05*sin(2*pi*f*t);
-figure (3)
-lsim(G2,u,t);        %sine input
+% f=0.5;
+% dt=0.1;
+% Tfinal=10;
+% t = 0:dt:Tfinal
+% u=0.05*sin(2*pi*f*t);
+% figure (3)
+% lsim(G2,u,t);        %sine input
+% 
+% figure (4)
+% impulse(0.05*G2,1);  %Impulse input
 
-figure (4)
-impulse(0.05*G2,1);  %Impulse input
-
+%% PSD
+w=0:25;
+G3=freqresp(G1,w)
+s=(4.028*10^(-7))./(2.88*10^(-4)+0.68*w.^2+w.^4)
+G4=abs(G3(:))';
+PSD=s.*(G4.^2);
+plot(PSD)
 %% Plots
 % 
 % figure(1);
