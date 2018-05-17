@@ -48,7 +48,8 @@ G3=freqresp(G1,w)
 s=(4.028*10^(-7))./(2.88*10^(-4)+0.68*w.^2+w.^4)
 G4=abs(G3(:))';
 PSD=s.*(G4.^2);
-plot(PSD)
+figure (2)
+semilogy(w,PSD)
 %% Plots
 % 
 % figure(1);
