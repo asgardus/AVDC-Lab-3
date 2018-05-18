@@ -10,6 +10,19 @@ mp = 0.16;                  %mass
 cs = 0.05;                  %damping coefficient
 ks = 0.0632;                %spring constant
 ms = 0.16;                  %mass
+T_mat = 0:0.05:1;
+for i=1:length(T_mat)
+    T = T_mat(i);                      %derivative gain
+    src = 1;                    % 1 - sine, 2 - impulse, 3 - step
+
+    % State-Space matrices
+    A = [0,1,0,0;-ks/ms,-T/ms,ks/ms,0;0,0,0,1;ks/mp,T/mp,-(ks+kp)/mp,-cp/mp];
+    B = [0,0;0,0;0,0;kp/mp,cp/mp];
+    C = [1,0,0,0];
+    D = zeros(1,2);
+    simout = sim('task6ss');
+    track(i) = T;
+end
 
 % Transfer functions
 Num = (cp*cs*s^2+(kp*cs+ks*cp)*s+kp*ks);
