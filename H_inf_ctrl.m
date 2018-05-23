@@ -83,12 +83,39 @@ figure(1)%pitch
 plot(pitch_passive.time,pitch_passive.data,'LineWidth',1.5)
 hold on
 
-figure(2)
+figure(2)%excitation
 plot(input.time, input.data,'LineWidth',1.5)
 hold on
-figure(2)
+figure(2)%bounce
 plot(z_passive.time, z_passive.data,'LineWidth',1.5)
 hold on
+%% Skyhook
+A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0]
+B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
+C1=eye(4);
+D1=zeros(4);
+
+
+c_z=190000;
+% cx=[1e6 2e6 3e6 4e6 5e6 6e6];
+c_x=5e6;
+simout9=sim('Task9ss')
+figure(1)%pitch skyhook
+plot(pitch.time, pitch.data,'LineWidth',1.5)
+hold on
+figure(2)%bounce skyhook
+plot(bounce.time, bounce.data,'LineWidth',1.5)
+hold on
+
+% figure(2)
+% f1(i)=max(Fa1.data);
+% f2(i)=max(Fa2.data);
+% figure(3)
+% plot(Fa1.time, Fa1.data,'LineWidth',1.5)
+% hold on
+% plot(Fa2.time, Fa2.data,'LineWidth',1.5)
+% hold on
+
 %% H infinity
 
 % A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0];
@@ -105,14 +132,16 @@ figure(1)
 plot(pitch_inf.time,pitch_inf.data,'LineWidth',1.5)
 hold on
 grid on
-legend('passive','Hinf')
+legend('passive','Skyhook','Hinf')
+xlim([0 5])
 xlabel('Time(s)')
 ylabel('Pitch angle(rad)')
 figure(2)
 plot(bounce_inf.time,bounce_inf.data,'LineWidth',1.5)
+xlim([0 5])
 xlabel('Time(s)')
 ylabel('Bounce amplitude(m)')
-legend('Excitation','passive','Hinf')
+legend('Excitation','passive','Skyhook','Hinf')
 hold on
 grid on
 figure(3)
