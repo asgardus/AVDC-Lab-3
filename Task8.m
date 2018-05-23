@@ -41,7 +41,7 @@ B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
 C1=eye(4);
 D1=zeros(4);
 
-time=1:10
+
 c_z=190000;
 % cx=[1e6 2e6 3e6 4e6 5e6 6e6];
 cx=5e6;
