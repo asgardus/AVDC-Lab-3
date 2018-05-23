@@ -120,5 +120,9 @@ plot(Fa1_inf.time, Fa1_inf.data,'LineWidth',1.5)
 hold on
 plot(Fa2_inf.time, Fa2_inf.data,'LineWidth',1.5)
 hold on
+legend('Fa1','Fa2')
+xlabel('Time(s)')
+ylabel('Actuator Force (N)')
+grid on
 f1=max(Fa1_inf.data)
 f2=max(Fa2_inf.data)
