@@ -1,6 +1,7 @@
 %% This is a Matlab file for designing H_infinity controller (assignment 3
 %% of SD2231)
 clear all
+clc
 s=tf('s');
 
 % systme parameters
@@ -42,8 +43,8 @@ s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=1.5e3;%input('Enter the gain for Wb = '); 
-kchi=1e4;%input('Enter the gain for Wchi = ');
+kb=2000;%input('Enter the gain for Wb = '); 
+kchi=10000;%input('Enter the gain for Wchi = ');
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
 
@@ -65,7 +66,7 @@ Pe=minreal(Pe);%This syntax cancels pole-zero pairs in transfer
 src=1;
 J=j;
 f=8;
-L=6;
+
 k1=k;
 k2=k;
 c1=c;
@@ -94,6 +95,7 @@ A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2
 B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
 C1=eye(4);
 D1=zeros(4);
+
 simout10=sim('task10')
 figure(1)
 plot(pitch_inf.time,pitch_inf.data,'LineWidth',1.5)
@@ -109,3 +111,10 @@ ylabel('Bounce amplitude(m)')
 legend('Excitation','passive','Hinf')
 hold on
 grid on
+figure(3)
+plot(Fa1_inf.time, Fa1_inf.data,'LineWidth',1.5)
+hold on
+plot(Fa2_inf.time, Fa2_inf.data,'LineWidth',1.5)
+hold on
+f1=max(Fa1_inf.data)
+f2=max(Fa2_inf.data)
