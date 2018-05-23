@@ -43,8 +43,8 @@ s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=2000;%input('Enter the gain for Wb = '); 
-kchi=10000;%input('Enter the gain for Wchi = ');
+kb=4010;%input('Enter the gain for Wb = '); 
+kchi=40000;%input('Enter the gain for Wchi = ');
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
 
@@ -74,8 +74,8 @@ c2=c;
 l1=L;
 l2=L;
 %% Passive damped
-A=[0 1 0 0;(-2*k/m) (-2*c/m) 0 0; 0 0 0 1;0 0 (-2*k*L^2)/J (-2*c*L^2)/J]
-B=[0 0 0 0;k/m c/m k/m c/m;0 0 0 0;-k*L/J -c*L/J k*L/J c*L/J]
+A=[0 1 0 0;(-2*k/m) (-2*c/m) 0 0; 0 0 0 1;0 0 (-2*k*L^2)/J (-2*c*L^2)/J];
+B=[0 0 0 0;k/m c/m k/m c/m;0 0 0 0;-k*L/J -c*L/J k*L/J c*L/J];
 C=[1 0 0 0;0 0 1 0];
 D=[0 0 0 0;0 0 0 0];
 simout8=sim('task8ss')
@@ -91,10 +91,14 @@ plot(z_passive.time, z_passive.data,'LineWidth',1.5)
 hold on
 %% H infinity
 
-A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0]
-B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
-C1=eye(4);
-D1=zeros(4);
+% A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0];
+% B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J];
+% C1=eye(4);
+% D1=zeros(4);
+A1=Ask;
+B1=Bsk;
+C1=Csk;
+D1=Dsk;
 
 simout10=sim('task10')
 figure(1)
