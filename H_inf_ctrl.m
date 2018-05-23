@@ -43,7 +43,7 @@ s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=4010;%input('Enter the gain for Wb = '); 
+kb=5000;%input('Enter the gain for Wb = '); 
 kchi=40000;%input('Enter the gain for Wchi = ');
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
