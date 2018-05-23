@@ -42,7 +42,7 @@ s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=1e3;%input('Enter the gain for Wb = '); 
+kb=1.5e3;%input('Enter the gain for Wb = '); 
 kchi=1e4;%input('Enter the gain for Wchi = ');
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
@@ -75,3 +75,8 @@ A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2
 B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
 C1=eye(4);
 D1=zeros(4);
+simout10=sim('task10')
+figure(1)
+plot(bounce_inf.time,bounce_inf.data,'LineWidth',1.5)
+figure(2)
+plot(pitch_inf.time,pitch_inf.data,'LineWidth',1.5)

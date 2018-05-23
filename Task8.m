@@ -33,7 +33,7 @@ G=ss2tf(An,Bn,Cn,Dn,1)
 [num,den]=ss2tf(An,Bn,Cn,Dn,3);
 bounce=tf(num(1,:),den);
 pitch=tf(num(3,:),den);
-% bode(bounce,pitch);
+bode(bounce,pitch);
 simout8=sim('task8ss')
 %simout parameters:
 %
