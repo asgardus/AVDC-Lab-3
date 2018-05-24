@@ -6,7 +6,7 @@ clear all
 
 s = tf('s');
 cp = 0.4;                   %damping coefficient
-dd_mat = 0.4:0.1:0.6;       %derivative gain
+dd_mat = 1.2;       %derivative gain
 dp_mat = 0;                 %proportional gain
 kp = 6.32;                  %spring constant
 mp = 0.16;                  %mass
