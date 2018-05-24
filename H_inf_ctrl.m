@@ -179,4 +179,14 @@ grid on
 hold on
 f1=max(Fa1_inf.data)
 f2=max(Fa2_inf.data)
+%% bode for weighting functions
+fr=0:0.1:1e4
+figure(7)
+bode(Wa1,fr)
+hold on
 
+bode(Wb,fr)
+hold on
+bode(Wchi,fr)
+hold on
+legend('Wa1','Wb','Wchi')
