@@ -89,7 +89,7 @@ hold on
 figure(2)%bounce
 plot(z_passive.time, z_passive.data,'LineWidth',1.5)
 hold on
-%% Skyhook
+%% Skyhook (comment in when comparing)
 % A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0]
 % B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
 % C1=eye(4);
@@ -132,7 +132,7 @@ figure(1)
 plot(pitch_inf.time,pitch_inf.data,'LineWidth',1.5)
 hold on
 grid on
-legend('passive','Hinf')
+legend('passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
 xlim([0 5])
 xlabel('Time(s)')
 ylabel('Pitch angle(rad)')
@@ -141,7 +141,7 @@ plot(bounce_inf.time,bounce_inf.data,'LineWidth',1.5)
 xlim([0 5])
 xlabel('Time(s)')
 ylabel('Bounce amplitude(m)')
-legend('Excitation','passive','Hinf')
+legend('Excitation','passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
 hold on
 grid on
 figure(3)
