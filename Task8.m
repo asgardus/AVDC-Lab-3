@@ -25,7 +25,7 @@ Bn=[0 0 0 0;k/m 0 k/m 0;0 0 0 0;-k*L/J 0 k*L/J 0];
 Cn=[1 0 0 0;0 0 0 0;0 0 1 0;0 0 0 0];
 Dn=[0 0 0 0;0 0 0 0;0 0 0 0;0 0 0 0];
 
-src=1;%1 for impulse,2 for sine
+src=2;%1 for impulse,2 for sine
 f=8;%set frequency in Hz (1 or 8)
 
 sys1=ss(An,Bn,Cn,Dn)
