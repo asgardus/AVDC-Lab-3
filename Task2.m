@@ -51,16 +51,16 @@ omega_d = (1-zeta^2)*omega; %damped natural frequency
 % % step(T1)
 % % xlim([0 5])
 % % legend('show')
-%% PID
-a=[20];
+%% PID tuning
+a=[15];%input tuned value or a range to tune
 % z=[0.8];
 % hd=mp*(2*w*z+a);
 % hi=a*w^2;
 % hp=w^2+2waz-kp;
 % Transfer function
 T1 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
-w=omega_d;
-z=0.8;
+w=omega;
+z=[0.5];%input tuned value or a range to tune
 
 for i=1:length(a)
    
@@ -70,7 +70,7 @@ for i=1:length(a)
            hp=w^2+2*w*a*z-kp;
 
             % Transfer function
-            T2 = kp/(mp*s^2+hd*s+kp+hp); 
+%             T2 = kp/(mp*s^2+hd*s+kp+hp); 
 
             fr=0:0.001:10e2;
             [mag,phase,wout]=bode(T1,fr);
@@ -86,5 +86,9 @@ for i=1:length(a)
 %         step(T2)        
 %         hold on
         sim('Main')
+        %the results were viewed on simulation data inspector
     end
 end
+%% Skyhook
+
+
