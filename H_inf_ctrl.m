@@ -8,7 +8,7 @@ s=tf('s');
 m=22000;   %kg
 j=700e3;   %kgm^2
 c=40e3;    %Ns/m
-k=2*300e3; %N/m
+k=600e3;%600e3; %N/m
 L=6;       %m
 
 %% State space model for skyhook contorl
@@ -63,7 +63,7 @@ Pe=minreal(Pe);%This syntax cancels pole-zero pairs in transfer
 
 %Now use the controller K in your simulation
 %% initialization
-src=2;
+src=1;
 J=j;
 f=8; %set frequency as 1Hz or 8Hz
 
@@ -79,16 +79,16 @@ B=[0 0 0 0;k/m c/m k/m c/m;0 0 0 0;-k*L/J -c*L/J k*L/J c*L/J];
 C=[1 0 0 0;0 0 1 0];
 D=[0 0 0 0;0 0 0 0];
 simout8=sim('task8ss')
-figure(1)%pitch
-plot(pitch_passive.time,pitch_passive.data,'LineWidth',1.5)
-hold on
-
-figure(2)%excitation
-plot(input.time, input.data,'LineWidth',1.5)
-hold on
-figure(2)%bounce
-plot(z_passive.time, z_passive.data,'LineWidth',1.5)
-hold on
+% figure(1)%pitch
+% plot(pitch_passive.time,pitch_passive.data,'LineWidth',1.5)
+% hold on
+% 
+% figure(2)%excitation
+% plot(input.time, input.data,'LineWidth',1.5)
+% hold on
+% figure(2)%bounce
+% plot(z_passive.time, z_passive.data,'LineWidth',1.5)
+% hold on
 %% Skyhook (comment in when comparing)
 % A1=[0 1 0 0;-(k1+k2)/m 0 (l1*k1-l2*k2)/m 0; 0 0 0 1;-(l1*k1-l2*k2)/J 0 -(k1*l1^2+k2*l2^2)/J 0]
 % B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J]
@@ -122,26 +122,48 @@ hold on
 % B1=[0 0 0 0;k1/m k2/m 1/m 1/m;0 0 0 0;-k1*l1/J k2*l2/J -l1/J l2/J];
 % C1=eye(4);
 % D1=zeros(4);
-A1=Ask;
-B1=Bsk;
-C1=Csk;
-D1=Dsk;
+%parameter variation (change in parameters)
+mx=22000;   %kg
+jx=700e3;   %kgm^2 
+cx=40e3;    %Ns/m
+kx=600e3; %N/m
+L=6;       %m
+% A1=Ask;
+% B1=Bsk;
+% C1=Csk;
+% D1=Dsk;
 
+A1=[0 1 0 0
+    -2*kx/mx 0 0 0
+    0 0 0 1
+    0 0 -2*kx*L^2/jx 0];
+B1=[0 0 0 0
+    kx/mx kx/mx -1/mx -1/mx
+    0 0 0 0
+    -L*kx/jx L*kx/jx L/jx -L/jx];
+C1=[0 1 0 0
+    0 0 0 1];
+D1=zeros(2,4);
+
+%% plot()
 simout10=sim('task10')
 figure(1)
 plot(pitch_inf.time,pitch_inf.data,'LineWidth',1.5)
 hold on
 grid on
-legend('passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
+% legend('passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
+legend('original','Inc K','dec K')
 xlim([0 5])
 xlabel('Time(s)')
 ylabel('Pitch angle(rad)')
+hold on
 figure(2)
 plot(bounce_inf.time,bounce_inf.data,'LineWidth',1.5)
 xlim([0 5])
 xlabel('Time(s)')
 ylabel('Bounce amplitude(m)')
-legend('Excitation','passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
+% legend('Excitation','passive','Hinf')%add 'skyhook b/w passive and Hinf when comparing with skyhook'
+legend('original','Inc J','dec J')% comment in for mass variation
 hold on
 grid on
 figure(3)
@@ -149,9 +171,12 @@ plot(Fa1_inf.time, Fa1_inf.data,'LineWidth',1.5)
 hold on
 plot(Fa2_inf.time, Fa2_inf.data,'LineWidth',1.5)
 hold on
-legend('Fa1','Fa2')
+legend('Fa1','Fa2','Inc J Fa1','Inc J Fa2','Dec J Fa1','Dec J Fa2')
+% legend('Fa1','Fa2')
 xlabel('Time(s)')
 ylabel('Actuator Force (N)')
 grid on
+hold on
 f1=max(Fa1_inf.data)
 f2=max(Fa2_inf.data)
+
