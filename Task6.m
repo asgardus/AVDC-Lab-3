@@ -10,16 +10,17 @@ mp = 0.16;                  %mass
 cs = 0.05;                  %damping coefficient
 ks = 0.0632;                %spring constant
 ms = 0.16;                  %mass
-T_mat = 0:0.05:1;
+T_mat = 0.15;
 for i=1:length(T_mat)
     T = T_mat(i);                      %derivative gain
-    src = 1;                    % 1 - sine, 2 - impulse, 3 - step
+    src = 3;                    % 1 - impulse, 2 - step, 3 - sine
 
     % State-Space matrices
     A = [0,1,0,0;-ks/ms,-T/ms,ks/ms,0;0,0,0,1;ks/mp,T/mp,-(ks+kp)/mp,-cp/mp];
     B = [0,0;0,0;0,0;kp/mp,cp/mp];
-    C = [1,0,0,0];
-    D = zeros(1,2);
+    o = [1 1 1 1];
+    C = diag(o);
+    D = zeros(4,2);
     simout = sim('task6ss');
     track(i) = T;
 end
@@ -27,10 +28,10 @@ end
 % Transfer functions
 Num = (cp*cs*s^2+(kp*cs+ks*cp)*s+kp*ks);
 Den = (mp*ms)*s^4+(mp*cs+ms*cp+ms*cs)*s^3+(mp*ks+kp*ms+cp*cs+ks*ms)*s^2+(cs*kp+cp*ks)*s+(kp*ks);
-T1 = Num/Den;
+T2 = Num/Den;
 
 fr=0:0.001:10e2;
-[mag,phase,wout]=bode(T1,fr);
+[mag,phase,wout]=bode(T2,fr);
 omega_max1=wout(find(mag==max(mag))); %find resonant frequency
 
 %% Initialization 1DOF
@@ -44,10 +45,10 @@ omega = sqrt(kp1/mp1);        %natural frequency
 omega_d = (1-zeta^2)*omega; %damped natural frequency
 
 % Transfer function
-T2 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
+T1 = (omega^2+(2*zeta*omega*s))/(s^2+omega^2+(2*zeta*omega*s));
 
 fr=0:0.001:10e2;
-[mag,phase,wout]=bode(T2,fr);
+[mag,phase,wout]=bode(T1,fr);
 omega_max2=wout(find(mag==max(mag))); %find resonant frequency
 
 %% Plots
